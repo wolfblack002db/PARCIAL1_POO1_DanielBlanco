@@ -5,6 +5,8 @@
  */
 package com.sv.udb.forms;
 import com.sv.udb.clases.ManipuladorProductos;
+import com.sv.udb.clases.Productos;
+import javax.swing.DefaultListModel;
 /**
  *
  * @author Estudiante
@@ -46,6 +48,12 @@ public class frmPrincipal1 extends javax.swing.JFrame {
         txtPrecio = new javax.swing.JTextField();
         txtCantidad = new javax.swing.JTextField();
         txtfecha = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lstTop = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lstVencer = new javax.swing.JList<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        lstMinimo = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,8 +78,18 @@ public class frmPrincipal1 extends javax.swing.JFrame {
         });
 
         btnProximo.setText("Proximo Vencer");
+        btnProximo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProximoActionPerformed(evt);
+            }
+        });
 
         btnProducto.setText("Producto minimo");
+        btnProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProductoActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Minimo permitido:");
 
@@ -83,6 +101,12 @@ public class frmPrincipal1 extends javax.swing.JFrame {
 
         jLabel4.setText("Fecha de caducidad");
 
+        jScrollPane1.setViewportView(lstTop);
+
+        jScrollPane2.setViewportView(lstVencer);
+
+        jScrollPane3.setViewportView(lstMinimo);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -90,10 +114,6 @@ public class frmPrincipal1 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnProximo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnTop3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnProducto, javax.swing.GroupLayout.Alignment.LEADING))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -119,8 +139,20 @@ public class frmPrincipal1 extends javax.swing.JFrame {
                                         .addGap(23, 23, 23)
                                         .addComponent(jLabel7)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAgregar)))))
-                .addContainerGap(94, Short.MAX_VALUE))
+                                .addComponent(btnAgregar))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnTop3, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnProximo, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,12 +184,16 @@ public class frmPrincipal1 extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTop3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnProximo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnProducto)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTop3)
+                    .addComponent(btnProximo)
+                    .addComponent(btnProducto))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25))
         );
 
         pack();
@@ -165,15 +201,54 @@ public class frmPrincipal1 extends javax.swing.JFrame {
 
     private void btnTop3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTop3ActionPerformed
         // TODO add your handling code here:
-        objPro.top3();
+        cargartops();
     }//GEN-LAST:event_btnTop3ActionPerformed
-
+    
+    public void cargartops(){
+        DefaultListModel listtop = new DefaultListModel();
+        for (Productos temp : objPro.top3()) {
+            listtop.addElement(temp.getNomb()+"->$"+temp.getPrec());
+        }
+        lstTop.setModel(listtop);
+    }
+    
+    public void cargarfecha(){
+        DefaultListModel listfecha = new DefaultListModel();
+        for (Productos temp : objPro.caducacion()) {
+            listfecha.addElement(temp.getNomb()+"->"+temp.getFecha());
+        }
+        lstVencer.setModel(listfecha);
+    }
+    
+    public void cargarminimo(){
+        DefaultListModel listmin = new DefaultListModel();
+        for (Productos temp : objPro.minimo()) {
+            listmin.addElement(temp.getNomb()+"->"+temp.getMini());
+        }
+        lstMinimo.setModel(listmin);
+    }
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         objPro.agregarProducto(txtNombre.getText(),Double.parseDouble(txtPrecio.getText()),
             Integer.parseInt(txtCantidad.getText()),Integer.parseInt(txtMinimo.getText()),
             txtfecha.getText());
+        txtNombre.setText("");
+        txtPrecio.setText("");
+        txtCantidad.setText("");
+        txtMinimo.setText("");
+        txtfecha.setText("");
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoActionPerformed
+        // TODO add your handling code here:
+        cargarfecha();
+    }//GEN-LAST:event_btnProximoActionPerformed
+
+    private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
+        // TODO add your handling code here:
+        cargarminimo();
+    }//GEN-LAST:event_btnProductoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -223,6 +298,12 @@ public class frmPrincipal1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JList<String> lstMinimo;
+    private javax.swing.JList<String> lstTop;
+    private javax.swing.JList<String> lstVencer;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtMinimo;
     private javax.swing.JTextField txtNombre;

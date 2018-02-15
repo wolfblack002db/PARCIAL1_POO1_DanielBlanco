@@ -5,7 +5,10 @@
  */
 package com.sv.udb.clases;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -23,39 +26,55 @@ public class ManipuladorProductos {
     public void agregarProducto(String nomb,double precio, int stock, int mini,String fecha){
         Productos objPro = new Productos(nomb, precio, stock, mini,fecha);
         this.listaPro.add(objPro);
+        JOptionPane.showMessageDialog(null,"Producto agregado");
     }
     
-    public void top3(){
-        double precio=0;
-        double top1=0;
-        double top2=0;
-        double top3=0;
-        int cont=0;
-        String nomb1="No Hay";
-        String nomb2="No Hay";
-        String nomb3="No Hay";
+    public List<Productos> top3(){
+        List<Productos> listtops = new ArrayList<>();
+        
         try {
-            for (Productos productos : listaPro) {
-                
-                precio= productos.getPrec();
-                if (precio> top1) {
-                    top1=precio;
-                    nomb1=productos.getNomb();
-                }
-                if (precio > top2 && precio < top1) {
-                    top2=precio;
-                    nomb2=productos.getNomb();
-                }
-                if (precio > top3 && precio < top2) {
-                    top3=precio;
-                    nomb3=productos.getNomb();
+            listaPro.sort(Comparator.comparing(Productos::getPrec).reversed());
+            for (int i = 0; i < listaPro.size(); i++) {
+                if (i<3) {
+                    listtops.add(listaPro.get(i));
                 }
             }
-            JOptionPane.showMessageDialog(null,"Top 1: " + nomb1 + " con precio de: $" + top1);
-            JOptionPane.showMessageDialog(null,"Top 2: " + nomb2 + " con precio de: $" + top2);
-            JOptionPane.showMessageDialog(null,"Top 3: " + nomb3 + " con precio de: $" + top3);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"ERROR INESPERADO" + e);
         }
+        return listtops;
+    }
+    
+    public List<Productos> caducacion(){
+        List<Productos> listcadu = new ArrayList<>();
+        try {   
+            listcadu.add(listaPro.get(0));
+            SimpleDateFormat caduca = new SimpleDateFormat("dd/MM/yyyy");
+            for (Productos productos : listaPro) {
+                 Date fecha1 = caduca.parse(listcadu.get(0).getFecha());
+                 Date fecha2 = caduca.parse(productos.getFecha());
+                 if (fecha2.before(fecha1)) {
+                    listcadu.clear();
+                    listcadu.add(productos);
+                }
+            }   
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"ERROR INESPERADO" + e);
+        }
+        return listcadu;
+    }
+    
+    public List<Productos> minimo(){
+        List<Productos> listmin = new ArrayList<>();
+        try {
+            for (Productos productos : listaPro) {
+                if (productos.getStock() == productos.getMini()) {
+                    listmin.add(productos);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"ERROR INESPERADO" + e);
+        }
+        return listmin;
     }
 }

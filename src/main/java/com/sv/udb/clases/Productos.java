@@ -66,6 +66,11 @@ public class Productos {
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
+
+//    @Override
+//    public String toString() {
+//        return nomb;  //To change body of generated methods, choose Tools | Templates.
+//    }
     
     
 }
