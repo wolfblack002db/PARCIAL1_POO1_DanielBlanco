@@ -31,18 +31,31 @@ public class ManipuladorProductos {
         double top2=0;
         double top3=0;
         int cont=0;
-        String[] nomb = new String[3];
+        String nomb1="No Hay";
+        String nomb2="No Hay";
+        String nomb3="No Hay";
         try {
             for (Productos productos : listaPro) {
                 
                 precio= productos.getPrec();
                 if (precio> top1) {
                     top1=precio;
+                    nomb1=productos.getNomb();
+                }
+                if (precio > top2 && precio < top1) {
+                    top2=precio;
+                    nomb2=productos.getNomb();
+                }
+                if (precio > top3 && precio < top2) {
+                    top3=precio;
+                    nomb3=productos.getNomb();
                 }
             }
-            JOptionPane.showMessageDialog(null,"");
+            JOptionPane.showMessageDialog(null,"Top 1: " + nomb1 + " con precio de: $" + top1);
+            JOptionPane.showMessageDialog(null,"Top 2: " + nomb2 + " con precio de: $" + top2);
+            JOptionPane.showMessageDialog(null,"Top 3: " + nomb3 + " con precio de: $" + top3);
         } catch (Exception e) {
-            
+            JOptionPane.showMessageDialog(null,"ERROR INESPERADO" + e);
         }
     }
 }
